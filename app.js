@@ -11,23 +11,19 @@ const validKeys = [
     'ArrowDown',
     'ArrowRight',
     'ArrowLeft',
-    'w',
-    'a',
-    's',
-    'd'
 ]
 let score = 0;
 // let currentKeyValue = null;
 let inputDir = { x: 0, y: 0 };
 // time and speed stuff is being done in milliseconds
-let speed = 500;
+let speed = 200;
 let lastPaintTime = 0;
 
 let snakeArr = [
     { x: 13, y: 15 }
 ];
 
-const food = { x: 3, y: 8 };
+let food = { x: 3, y: 8 };
 
 
 
@@ -35,11 +31,11 @@ const food = { x: 3, y: 8 };
 function main(ctime) {
 
     // max runtime for now
-    if (ctime > 10000) {
-        console.log('FINAL'
-            , { ctime }, { lastPaintTime }, ctime - lastPaintTime);
-        return
-    }
+    // if (ctime > 10000) {
+    //     console.log('FINAL'
+    //         , { ctime }, { lastPaintTime }, ctime - lastPaintTime);
+    //     return
+    // }
 
     window.requestAnimationFrame(main)
 
@@ -76,14 +72,15 @@ function gameEngine() {
     }
 
     // If you have eaten the food, increment the score and regenerate the food
-    if (snakeArr[0].x === food.x &&
-        snakeArr[0].y === food.y) {
+    if (snakeArr[0].y === food.y &&
+        snakeArr[0].x === food.x
+    ) {
 
         snakeArr.unshift({
             x: snakeArr[0].x + inputDir.x,
             y: snakeArr[0].y + inputDir.y
         });
-        
+
         const a = 2;
         const b = 16;
         food = {
@@ -92,12 +89,20 @@ function gameEngine() {
         };
     }
 
+    // moving the snake
+    for (let i = snakeArr.length - 2; i >= 0; i--) {
+        snakeArr[i + 1] = { ...snakeArr[i] };
+    }
+
+    snakeArr[0].x += inputDir.x;
+    snakeArr[0].y += inputDir.y;
+
     // Part 2> display the snake and food
 
     // * display the snake
     // ? it seems ids can be used DirectLy without even using grabbing them expicitly through queryselector/getElementbyid 
     // console.log(board);
-    board.innerHTML = ''
+    board.innerHTML = '';
     snakeArr.forEach((Element, index) => {
         let snakeElement = document.createElement('div');
         snakeElement.style.gridRowStart = Element.y;
@@ -106,11 +111,10 @@ function gameEngine() {
         if (index === 0) {
             snakeElement.classList.add('head');
         } else {
-            snakeElement.classList.add('snake')
+            snakeElement.classList.add('snake');
         }
 
         board.appendChild(snakeElement);
-
     });
 
     // * display the food
@@ -137,7 +141,7 @@ window.addEventListener('keydown', Element => {
     //     return
     // }
 
-    // to exit the function if invalid key is 
+    // ! to exit the function if invalid key is 
     // pressed
     if (!validKeys.includes(Element.key)) {
         return
@@ -147,6 +151,7 @@ window.addEventListener('keydown', Element => {
     inputDir = { x: 0, y: 1 };
     // moveSound.play()
     // currentKeyValue = Element.key;
+    //  * controls
     switch (Element.key) {
         case 'ArrowUp':
             inputDir.x = 0;
@@ -158,7 +163,7 @@ window.addEventListener('keydown', Element => {
             inputDir.y = 1;
             break;
 
-        case 'Arrowleft':
+        case 'ArrowLeft':
             inputDir.x = -1;
             inputDir.y = 0;
             break;
@@ -171,6 +176,6 @@ window.addEventListener('keydown', Element => {
         default:
             break;
     }
-    console.log(Element);
-    console.log(inputDir)
+    // console.log(Element);
+    console.table(snakeArr)
 })
