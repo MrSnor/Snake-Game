@@ -16,6 +16,7 @@ const validKeys = [
     's',
     'd'
 ]
+let score = 0;
 // let currentKeyValue = null;
 let inputDir = { x: 0, y: 0 };
 // time and speed stuff is being done in milliseconds
@@ -56,8 +57,40 @@ function main(ctime) {
     }
 }
 
+function isCollide(sArr) {
+    return false
+}
+
 function gameEngine() {
     // Part 1> Updating the snake variable
+    if (isCollide(snakeArr)) {
+        // gameOverSound.play();
+        // musicSound.pause();
+        inputDir = { x: 0, y: 0 };
+        alert('Game over!')
+        snakeArr = [
+            { x: 13, y: 15 }
+        ];
+        // musicSound.play();
+        score = 0;
+    }
+
+    // If you have eaten the food, increment the score and regenerate the food
+    if (snakeArr[0].x === food.x &&
+        snakeArr[0].y === food.y) {
+
+        snakeArr.unshift({
+            x: snakeArr[0].x + inputDir.x,
+            y: snakeArr[0].y + inputDir.y
+        });
+        
+        const a = 2;
+        const b = 16;
+        food = {
+            x: Math.round(a + (b - a) * Math.random()),
+            y: Math.round(a + (b - a) * Math.random())
+        };
+    }
 
     // Part 2> display the snake and food
 
