@@ -1,37 +1,56 @@
 
 // constants and variables for the game
-const direction = { x: 0, y: 0 }
+
 const foodSound = new Audio('./music/food.mp3');
 const gameOverSound = new Audio('./music/gameover.mp3');
 const moveSound = new Audio('./music/move.mp3');
 const musicSound = new Audio('./music/music.mp3');
 const board = document.querySelector('#board')
+const scoreBox = document.querySelector('#scoreBox')
+const hiScoreBox = document.querySelector('#hiScoreBox');
+const RESET = document.querySelector('#reset')
 const validKeys = [
     'ArrowUp',
     'ArrowDown',
     'ArrowRight',
     'ArrowLeft',
 ]
+const boundary = {
+    xmin: 1,
+    xmax: 18,
+    ymin: 1,
+    ymax: 18
+}
+
 let score = 0;
+let hiScore = 0;
 // let currentKeyValue = null;
 let inputDir = { x: 0, y: 0 };
-// time and speed stuff is being done in milliseconds
+// * time and speed stuff is being done in milliseconds
+// ! decrease "speed" value to increase snake's speed
 let speed = 200;
 let lastPaintTime = 0;
 
 let snakeArr = [
     { x: 13, y: 15 }
 ];
-
 let food = { x: 3, y: 8 };
 
+// displaying hiScore from device
+if (localStorage.localhiScore) {
+    hiScore = localStorage.localhiScore;
+} else {
+    localStorage.localhiScore = 0;
+}
+hiScoreBox.textContent = `HiScore : ${hiScore}`
 
 
 // game functions
+
 function main(ctime) {
 
-    // max runtime for now
-    // if (ctime > 10000) {
+    // ! max runtime for now
+    // if (ctime > 50000) {
     //     console.log('FINAL'
     //         , { ctime }, { lastPaintTime }, ctime - lastPaintTime);
     //     return
@@ -53,11 +72,35 @@ function main(ctime) {
     }
 }
 
-function isCollide(sArr) {
+function isCollide(snake) {
+
+    // if snake collides to self
+    for (let i = 1; i < snakeArr.length; i++) {
+        if (snake[0].x === snake[i].x &&
+            snake[0].y === snake[i].y) {
+            return true;
+        }
+    }
+
+    // if snake collides to borders
+    if (snake[0].x < boundary.xmin ||
+        snake[0].x > boundary.xmax ||
+
+        snake[0].y < boundary.ymin ||
+        snake[0].y > boundary.ymax) {
+        return true;
+    }
+
     return false
 }
 
+RESET.addEventListener('click', () => {
+    localStorage.clear()
+    hiScoreBox.textContent = `HiScore : 0`
+})
+
 function gameEngine() {
+
     // Part 1> Updating the snake variable
     if (isCollide(snakeArr)) {
         // gameOverSound.play();
@@ -68,14 +111,24 @@ function gameEngine() {
             { x: 13, y: 15 }
         ];
         // musicSound.play();
+        if (score > hiScore) {
+            localStorage.localhiScore = score;
+            hiScore = localStorage.localhiScore
+        }
         score = 0;
+
+        scoreBox.textContent = `Score : ${score}`;
+        hiScoreBox.textContent = `HiScore : ${hiScore}`
     }
 
-    // If you have eaten the food, increment the score and regenerate the food
+    // If you have eaten the food, increment the score, increase snake body and regenerate the food
     if (snakeArr[0].y === food.y &&
         snakeArr[0].x === food.x
     ) {
-
+        // foodSound.play()
+        score++
+        scoreBox.textContent = `Score : ${score}`;
+        // * increasing snake length
         snakeArr.unshift({
             x: snakeArr[0].x + inputDir.x,
             y: snakeArr[0].y + inputDir.y
@@ -89,7 +142,7 @@ function gameEngine() {
         };
     }
 
-    // moving the snake
+    // * moving the snake
     for (let i = snakeArr.length - 2; i >= 0; i--) {
         snakeArr[i + 1] = { ...snakeArr[i] };
     }
@@ -99,7 +152,7 @@ function gameEngine() {
 
     // Part 2> display the snake and food
 
-    // * display the snake
+    // display the snake
     // ? it seems ids can be used DirectLy without even using grabbing them expicitly through queryselector/getElementbyid 
     // console.log(board);
     board.innerHTML = '';
@@ -117,7 +170,7 @@ function gameEngine() {
         board.appendChild(snakeElement);
     });
 
-    // * display the food
+    // display the food
     let foodElement = document.createElement('div');
     foodElement.style.gridRowStart = food.y;
     foodElement.style.gridColumnStart = food.x;
@@ -125,6 +178,9 @@ function gameEngine() {
     foodElement.classList.add('food');
     board.appendChild(foodElement);
 }
+
+
+
 
 // main logic of game
 
@@ -151,7 +207,7 @@ window.addEventListener('keydown', Element => {
     inputDir = { x: 0, y: 1 };
     // moveSound.play()
     // currentKeyValue = Element.key;
-    //  * controls
+    // * controls
     switch (Element.key) {
         case 'ArrowUp':
             inputDir.x = 0;

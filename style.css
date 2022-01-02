@@ -19,19 +19,29 @@
 #scoreBox {
     position: absolute;
     top: 9px;
-    right: 200px;
+    left: 287px;
     font-size: 39px;
     font-weight: bold;
     font-family: 'New Tegomin', serif;
 }
 
-#hiscoreBox {
+#hiScoreBox {
     position: absolute;
-    top: 9px;
-    right: 200px;
+    top: 58px;
+    left: 230px;
     font-size: 39px;
     font-weight: bold;
     font-family: 'New Tegomin', serif;
+}
+
+#reset {
+    width: 10vmin;
+    width: 20vmin;
+    font-weight: bold;
+    position: absolute;
+    left: 269px;
+    top: 120px;
+    background-color: red;
 }
 
 #board {
@@ -43,6 +53,7 @@
     grid-template-rows: repeat(18, 1fr);
     grid-template-columns: repeat(18, 1fr);
 }
+
 
 .head {
     background-color: black;
@@ -59,7 +70,7 @@
 }
 
 .food {
-    background-color: red;
+    background-color: chocolate;
     border: .25vmin solid black;
     border-radius: 8px;
 }
