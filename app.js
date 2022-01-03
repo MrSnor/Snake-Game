@@ -28,7 +28,7 @@ let hiScore = 0;
 let inputDir = { x: 0, y: 0 };
 // * time and speed stuff is being done in milliseconds
 // ! decrease "speed" value to increase snake's speed
-let speed = 200;
+let speed = 150;
 let lastPaintTime = 0;
 
 let snakeArr = [

@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+
+@import url('http://fonts.cdnfonts.com/css/nokia-cellphone-fc');
+
+:root {
+    font-family: 'Nokia Cellphone FC', sans-serif;
+}
 
 * {
     padding: 0;
@@ -19,10 +24,9 @@
 #scoreBox {
     position: absolute;
     top: 9px;
-    left: 287px;
+    left: 230px;
     font-size: 39px;
     font-weight: bold;
-    font-family: 'New Tegomin', serif;
 }
 
 #hiScoreBox {
@@ -31,16 +35,17 @@
     left: 230px;
     font-size: 39px;
     font-weight: bold;
-    font-family: 'New Tegomin', serif;
 }
 
 #reset {
-    width: 10vmin;
+    height: 10vmin;
     width: 20vmin;
     font-weight: bold;
     position: absolute;
-    left: 269px;
+    left: 230px;
     top: 120px;
+    font-family: inherit;
+    font-size: large;
     background-color: red;
 }
 
