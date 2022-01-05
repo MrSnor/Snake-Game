@@ -47,6 +47,7 @@
     border:6px solid black;
     box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4);
     text-align: center;
+    cursor: pointer;
 }
 
 #reset:active {
