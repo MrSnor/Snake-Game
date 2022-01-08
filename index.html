@@ -12,10 +12,22 @@
 
 <body>
     <div class="body">
-        <div id="scoreBox">Score: 0</div>
-        <div id="hiScoreBox">HiScore:0</div>
-        <button id="reset">Reset HighScore</button>
+        <div class="score-container">
+            <div id="scoreBox">Score : 0</div>
+        </div>
+
         <div id="board"></div>
+
+        <div class="highScore-container">
+            <div id="hiScoreBox">HighScores
+                <ol>
+                    <li id="1"></li>
+                    <li id="2"></li>
+                    <li id="3"></li>
+                </ol>
+            </div>
+            <button id="reset">Reset HighScore</button>
+        </div>
     </div>
 </body>
 <script src="./app.js"></script>
