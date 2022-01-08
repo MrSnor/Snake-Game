@@ -1,7 +1,7 @@
 # Snake game todos/maybes
 
 ## bugs
-1. not to allow to move in direct opposite direction (eg. cant go down when moving up )
+1. ~~not to allow movement in direct opposite direction (eg. cant go down when moving up )~~ --> **fixed**
 
 ## game modes
 - wrap wall

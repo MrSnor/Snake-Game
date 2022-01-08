@@ -11,6 +11,12 @@ const validKeys = [
     'ArrowRight',
     'ArrowLeft',
 ]
+const oppositeDirectionKeys = {
+    'ArrowUp': 'ArrowDown',
+    'ArrowDown': 'ArrowUp',
+    'ArrowRight': 'ArrowLeft',
+    'ArrowLeft': 'ArrowRight',
+}
 const boundary = {
     xmin: 1,
     xmax: 18,
@@ -20,7 +26,7 @@ const boundary = {
 
 let score = 0;
 let hiScore = 0;
-// let currentKeyValue = null;
+let currentKeyValue = null;
 let inputDir = { x: 0, y: 0 };
 // * time and speed stuff is being done in milliseconds
 // ! decrease "speed" value to increase snake's speed
@@ -45,13 +51,6 @@ hiScoreBox.textContent = `HiScore : ${hiScore}`
 
 function main(ctime) {
 
-    // ! max runtime for now
-    // if (ctime > 50000) {
-    //     console.log('FINAL'
-    //         , { ctime }, { lastPaintTime }, ctime - lastPaintTime);
-    //     return
-    // }
-
     window.requestAnimationFrame(main)
 
     // checks is diff of time is smaller than 
@@ -59,12 +58,8 @@ function main(ctime) {
     if ((ctime - lastPaintTime) < speed) {
         return
     } else {
-
         lastPaintTime = ctime;
         gameEngine()
-        // console.log('swagat nahi karoge hamara? :(');
-        // console.log({ ctime }, { lastPaintTime }, ctime - lastPaintTime);
-        // console.log(' ');
     }
 }
 
@@ -99,14 +94,11 @@ function gameEngine() {
 
     // Part 1> Updating the snake variable
     if (isCollide(snakeArr)) {
-        // gameOverSound.play();
-        // musicSound.pause();
         inputDir = { x: 0, y: 0 };
         alert('Game over!')
         snakeArr = [
             { x: 13, y: 15 }
         ];
-        // musicSound.play();
         if (score > hiScore) {
             localStorage.localhiScore = score;
             hiScore = localStorage.localhiScore
@@ -121,7 +113,6 @@ function gameEngine() {
     if (snakeArr[0].y === food.y &&
         snakeArr[0].x === food.x
     ) {
-        // foodSound.play()
         score++
         scoreBox.textContent = `Score : ${score}`;
         // * increasing snake length
@@ -150,7 +141,7 @@ function gameEngine() {
 
     // display the snake
     // ? it seems ids can be used DirectLy without even using grabbing them expicitly through queryselector/getElementbyid 
-    // console.log(board);
+
     board.innerHTML = '';
     snakeArr.forEach((Element, index) => {
         let snakeElement = document.createElement('div');
@@ -180,8 +171,6 @@ function gameEngine() {
 
 // main logic of game
 
-// musicSound.play()
-
 window.requestAnimationFrame(main)
 
 window.addEventListener('keydown', Element => {
@@ -199,10 +188,17 @@ window.addEventListener('keydown', Element => {
         return
     }
 
+    // to check the the snake doesnt move in direct oppposite direction
+    if (snakeArr.length > 1) {
+        if (Element.key == oppositeDirectionKeys[currentKeyValue]) {
+            return
+        }
+    }
+
     // starts the  game
     inputDir = { x: 0, y: 1 };
-    // moveSound.play()
-    // currentKeyValue = Element.key;
+    currentKeyValue = Element.key;
+
     // * controls
     switch (Element.key) {
         case 'ArrowUp':
@@ -228,6 +224,4 @@ window.addEventListener('keydown', Element => {
         default:
             break;
     }
-    // console.log(Element);
-    console.table(snakeArr)
 })
