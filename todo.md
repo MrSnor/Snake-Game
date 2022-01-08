@@ -2,6 +2,7 @@
 
 ## bugs
 1. ~~not to allow movement in direct opposite direction (eg. cant go down when moving up )~~ --> **fixed**
+2. food appearing ON the snake
 
 ## game modes
 - wrap wall
