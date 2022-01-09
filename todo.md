@@ -13,5 +13,5 @@
 
 ## styling correction 
 - make it responsive + make it playable on phone(by implementing **swipes** through js)
-- top 3 high scores
-- would be better if use flex to keep board written stuff separate
+- ~~top 3 high scores~~ **done**
+- ~~would be better if use flex to keep board written stuff separate~~ **done**
