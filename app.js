@@ -37,14 +37,27 @@ let snakeArr = [
     { x: 13, y: 15 }
 ];
 let food = { x: 3, y: 8 };
+let localHighScores = JSON.parse(localStorage.getItem('localHighScores'));
+let firstHighScore = document.querySelector('#hiScoreBox > ol > #first');
+let secondHighScore = document.querySelector('#hiScoreBox > ol > #second');
+let thirdHighScore = document.querySelector('#hiScoreBox > ol > #third');
 
-// displaying hiScore from device
-if (localStorage.localhiScore) {
-    hiScore = localStorage.localhiScore;
-} else {
-    localStorage.localhiScore = 0;
+// displaying highScores from device
+
+if (localHighScores == null) {
+    localStorage.setItem('localHighScores', JSON.stringify([0, 0, 0]));
 }
-hiScoreBox.textContent = `HiScore : ${hiScore}`
+
+firstHighScore.textContent = localHighScores[0];
+secondHighScore.textContent = localHighScores[1];
+thirdHighScore.textContent = localHighScores[2];
+
+// if (localStorage.localhiScore) {
+//     hiScore = localStorage.localhiScore;
+// } else {
+//     localStorage.localhiScore = 0;
+// }
+// hiScoreBox.textContent = `HiScore : ${hiScore}`
 
 
 // game functions
@@ -87,7 +100,10 @@ function isCollide(snake) {
 
 RESET.addEventListener('click', () => {
     localStorage.clear()
-    hiScoreBox.textContent = `HiScore : 0`
+
+    firstHighScore.textContent = 0;
+    secondHighScore.textContent = 0;
+    thirdHighScore.textContent = 0;
 })
 
 function gameEngine() {
@@ -99,14 +115,25 @@ function gameEngine() {
         snakeArr = [
             { x: 13, y: 15 }
         ];
-        if (score > hiScore) {
-            localStorage.localhiScore = score;
-            hiScore = localStorage.localhiScore
+
+        for (let index = 0; index < localHighScores.length; index++) {
+            let element = localHighScores[index];
+            
+            if (score > element) {
+                localHighScores[index] = score;
+                localStorage.setItem('localHighScores', JSON.stringify(localHighScores));
+                break
+            }
+            
         }
+
         score = 0;
 
         scoreBox.textContent = `Score: ${score}`;
-        hiScoreBox.textContent = `HiScore : ${hiScore}`
+
+        firstHighScore.textContent = localHighScores[0];
+        secondHighScore.textContent = localHighScores[1];
+        thirdHighScore.textContent = localHighScores[2];
     }
 
     // If you have eaten the food, increment the score, increase snake body and regenerate the food
