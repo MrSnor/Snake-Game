@@ -105,7 +105,7 @@ function gameEngine() {
         }
         score = 0;
 
-        scoreBox.textContent = `Score : ${score}`;
+        scoreBox.textContent = `Score: ${score}`;
         hiScoreBox.textContent = `HiScore : ${hiScore}`
     }
 
@@ -114,7 +114,7 @@ function gameEngine() {
         snakeArr[0].x === food.x
     ) {
         score++
-        scoreBox.textContent = `Score : ${score}`;
+        scoreBox.textContent = `Score: ${score}`;
         // * increasing snake length
         snakeArr.unshift({
             x: snakeArr[0].x + inputDir.x,

@@ -9,7 +9,7 @@
     margin: 0;
 }
 
-.body {
+body {
     background-color: rgba(120, 170, 133, 255);
     min-height: 100vh;
     background-size: 100vw 100vh;
@@ -19,16 +19,11 @@
     align-items: center;
 }
 
-.score-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #scoreBox {
     font-size: 30px;
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4);
     user-select: none;
+    width: 30vmin;
 }
 
 #board {
@@ -41,13 +36,15 @@
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.7);
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.7);
     border-width: 6px;
-    margin: 0 10%;
+    /* margin: 0 10%; */
 }
 
 #hiScoreBox {
     font-size: 30px;
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4);
     user-select: none;
+    width: 30vmin;
+    margin: 0 0 0 4rem;
 }
 
 #reset {
