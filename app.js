@@ -29,8 +29,6 @@ let hiScore = 0;
 let currentKeyValue = null;
 let inputDir = { x: 0, y: 0 };
 // * time and speed stuff is being done in milliseconds
-// ! decrease "speed" value to increase snake's speed
-let speed = 150;
 let lastPaintTime = 0;
 
 let snakeArr = [
@@ -52,14 +50,6 @@ firstHighScore.textContent = localHighScores[0];
 secondHighScore.textContent = localHighScores[1];
 thirdHighScore.textContent = localHighScores[2];
 
-// if (localStorage.localhiScore) {
-//     hiScore = localStorage.localhiScore;
-// } else {
-//     localStorage.localhiScore = 0;
-// }
-// hiScoreBox.textContent = `HiScore : ${hiScore}`
-
-
 // game functions
 
 function main(ctime) {
@@ -68,6 +58,8 @@ function main(ctime) {
 
     // checks is diff of time is smaller than 
     // specified time interval/speed
+    // ! decrease "speed" value to increase snake's speed
+    let speed = 130;
     if ((ctime - lastPaintTime) < speed) {
         return
     } else {
@@ -101,6 +93,8 @@ function isCollide(snake) {
 RESET.addEventListener('click', () => {
     localStorage.clear()
 
+    localHighScores = JSON.parse(localStorage.getItem('localHighScores'));
+
     firstHighScore.textContent = 0;
     secondHighScore.textContent = 0;
     thirdHighScore.textContent = 0;
@@ -116,15 +110,25 @@ function gameEngine() {
             { x: 13, y: 15 }
         ];
 
+        // Updating highscores
+        if (localHighScores == null) {
+            localStorage.setItem('localHighScores', JSON.stringify([0, 0, 0]));
+            localHighScores = JSON.parse(localStorage.getItem('localHighScores'));
+        }
         for (let index = 0; index < localHighScores.length; index++) {
             let element = localHighScores[index];
-            
-            if (score > element) {
-                localHighScores[index] = score;
+
+            if ((score > element) && (!localHighScores.includes(score))) {
+
+                localHighScores.splice(index, 0, score);
+                if (localHighScores.length > 3) {
+                    localHighScores.pop()
+                }
+
                 localStorage.setItem('localHighScores', JSON.stringify(localHighScores));
                 break
             }
-            
+
         }
 
         score = 0;
@@ -201,13 +205,6 @@ function gameEngine() {
 window.requestAnimationFrame(main)
 
 window.addEventListener('keydown', Element => {
-
-    // to exit the function if invalid key is 
-    // pressed or same(valid key) is pressed 
-    // twice in a row
-    // if (!validKeys.includes(Element.key) || (Element.key == currentKeyValue)) {
-    //     return
-    // }
 
     // ! to exit the function if invalid key is 
     // pressed
