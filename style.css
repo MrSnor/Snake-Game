@@ -47,6 +47,11 @@ body {
     margin: 0 0 0 4rem;
 }
 
+#hiScoreBox > ol {
+    list-style: devanagari inside;
+    word-spacing: 2rem;
+}
+
 #reset {
     height: 10vmin;
     width: 20vmin;
