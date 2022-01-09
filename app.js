@@ -44,6 +44,7 @@ let thirdHighScore = document.querySelector('#hiScoreBox > ol > #third');
 
 if (localHighScores == null) {
     localStorage.setItem('localHighScores', JSON.stringify([0, 0, 0]));
+    localHighScores = JSON.parse(localStorage.getItem('localHighScores'));
 }
 
 firstHighScore.textContent = localHighScores[0];
