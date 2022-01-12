@@ -1,3 +1,4 @@
+"use strict";
 
 // constants and variables for the game
 
@@ -10,6 +11,10 @@ const validKeys = [
     'ArrowDown',
     'ArrowRight',
     'ArrowLeft',
+    'w',
+    'a',
+    's',
+    'd'
 ]
 const oppositeDirectionKeys = {
     'ArrowUp': 'ArrowDown',
@@ -206,6 +211,7 @@ function gameEngine() {
 window.requestAnimationFrame(main)
 
 window.addEventListener('keydown', Element => {
+    let keyPressed = null;
 
     // ! to exit the function if invalid key is 
     // pressed
@@ -213,19 +219,36 @@ window.addEventListener('keydown', Element => {
         return
     }
 
+    // wasd as controls keys
+    if (Element.key === 'w') {
+        keyPressed = 'ArrowUp';
+    } 
+    else if (Element.key === 'a') {
+        keyPressed = 'ArrowLeft';
+    } 
+    else if (Element.key === 's') {
+        keyPressed = 'ArrowDown';
+    } 
+    else if (Element.key === 'd') {
+        keyPressed = 'ArrowRight';
+    }
+    else {
+        keyPressed = Element.key;
+    }
+
     // to check the the snake doesnt move in direct oppposite direction
     if (snakeArr.length > 1) {
-        if (Element.key == oppositeDirectionKeys[currentKeyValue]) {
+        if (keyPressed == oppositeDirectionKeys[currentKeyValue]) {
             return
         }
     }
 
     // starts the  game
     inputDir = { x: 0, y: 1 };
-    currentKeyValue = Element.key;
+    currentKeyValue = keyPressed;
 
     // * controls
-    switch (Element.key) {
+    switch (keyPressed) {
         case 'ArrowUp':
             inputDir.x = 0;
             inputDir.y = -1;
