@@ -65,7 +65,7 @@ function main(ctime) {
     // checks is diff of time is smaller than 
     // specified time interval/speed
     // ! decrease "speed" value to increase snake's speed
-    let speed = 130;
+    let speed = 100;
     if ((ctime - lastPaintTime) < speed) {
         return
     } else {
