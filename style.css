@@ -36,7 +36,6 @@ body {
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.7);
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.7);
     border-width: 6px;
-    /* margin: 0 10%; */
 }
 
 #hiScoreBox {
@@ -77,11 +76,10 @@ body {
 
 .snake {
     background-color: black;
-    box-shadow: 6px 2px 3px 1px rgba(0, 0, 0, 0.7);
+    box-shadow: 6px 2px 3px rgba(0, 0, 0, 0.7);
 }
 
 .food {
-    background-color: transparent;
     background-image: url('./images/kawai-riceball.png');
     background-size: contain;
     background-repeat: no-repeat;
